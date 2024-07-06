@@ -5,7 +5,7 @@
   />
 </div>
 <div class="courses">
-  <course-card
+  <!-- <course-card
     *ngFor="
       let course of courses;
       index as i;
@@ -21,5 +21,10 @@
     [class.is-last]="isLast"
     [class.is-even]="isEven"
     [class.is-odd]="isOdd"
+  ></course-card> -->
+  <course-card
+    #cardRef
+    (courseSelceted)="onCardClicked($event)"
+    [course]="courses[1]"
   ></course-card>
 </div>
