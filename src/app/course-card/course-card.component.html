@@ -1,4 +1,4 @@
-<div class="course-card">
+<div class="course-card" [ngClass]="cardClasses()">
   {{ cardIndex }}
   <div class="course-title">{{ course?.description }}</div>
   <img
