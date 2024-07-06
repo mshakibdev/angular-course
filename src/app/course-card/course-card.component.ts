@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../model/course';
 
 @Component({
@@ -8,4 +8,11 @@ import { Course } from '../model/course';
 })
 export class CourseCardComponent {
   @Input({ required: true }) course: Course | undefined;
+
+  @Output() courseSelceted = new EventEmitter<Course>();
+  onCourseViewed() {
+    console.log('opk');
+    this.courseSelceted.emit(this.course);
+  }
+ 
 }
