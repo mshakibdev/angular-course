@@ -4,7 +4,7 @@
     src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png"
   />
 </div>
-<div class="courses">
+<div class="courses" #container>
   <!-- <course-card
     *ngFor="
       let course of courses;
@@ -23,7 +23,8 @@
     [class.is-odd]="isOdd"
   ></course-card> -->
   <course-card
+    #cardRef
     (courseSelceted)="onCardClicked($event)"
-    [course]="courses[1]"
+    [course]="courses[4]"
   ></course-card>
 </div>

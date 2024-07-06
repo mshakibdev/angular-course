@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { COURSES } from 'src/db-data';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
@@ -11,9 +11,13 @@ import { CourseCardComponent } from './course-card/course-card.component';
 export class AppComponent {
   courses = COURSES;
 
-  @ViewChild(CourseCardComponent) card: Component | undefined;
+  @ViewChild(CourseCardComponent) cardComponent: Component | undefined;
+  @ViewChild('cardRef', { read: ElementRef }) cardDom: ElementRef | undefined;
+  @ViewChild('container') contaierDiv: ElementRef | undefined;
   onCardClicked(course: Course) {
-    console.log('card clicked', this.card);
+    console.log('card component clicked', this.cardComponent);
+    console.log('card dom clicked', this.cardDom);
+    console.log('contaierDiv clicked', this.contaierDiv);
   }
   browserEvent() {
     console.log('called');
