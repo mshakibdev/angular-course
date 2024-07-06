@@ -14,4 +14,7 @@ export class CourseCardComponent {
     console.log('opk');
     this.courseSelceted.emit(this.course);
   }
+  isImageVisible() {
+    return this.course && this.course.iconUrl;
+  }
 }

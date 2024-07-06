@@ -1,7 +1,13 @@
 <div class="course-card">
   {{ cardIndex }}
   <div class="course-title">{{ course?.description }}</div>
-  <img width="300" alt="Angular Logo" [src]="course?.iconUrl" />
+  <img
+    width="300"
+    alt="Angular Logo"
+    *ngIf="isImageVisible(); else noImage"
+    [src]="course?.iconUrl"
+  />
+  <ng-template #noImage>No Image avaiable</ng-template>
 
   <div class="course-description">
     A detailed walk-through of the most important part of Angular - the Core and
