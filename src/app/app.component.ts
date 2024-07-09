@@ -3,7 +3,7 @@ import { COURSES } from 'src/db-data';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, toArray } from 'rxjs';
+import { map, toArray, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +12,26 @@ import { map, toArray } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   courses!: Course[];
+  courses$!: Observable<Course[]>;
   httpUrl = 'http://localhost:9000/api/courses';
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     const params = new HttpParams().set('page', 1).set('pageSize', 10);
-    this.http
-      .get<{ payload: Course[] }>(this.httpUrl, { params })
-      .subscribe(({ payload }) => {
-        this.courses = payload;
-      });
+    // witout observable
+    // this.http
+    //   .get<{ payload: Course[] }>(this.httpUrl, { params })
+    //   .subscribe(({ payload }) => {
+    //     this.courses = payload;
+    //   });
+
+    // with observable
+
+    this.courses$ = this.http
+      .get<{ payload: Course[] }>(this.httpUrl, {
+        params,
+      })
+      .pipe(map((courses) => courses.payload));
   }
 
   @ViewChild(CourseCardComponent) cardComponent!: Component;
