@@ -4,6 +4,7 @@ import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, toArray, Observable } from 'rxjs';
+import { CoursesService } from './services/courses.service';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +15,24 @@ export class AppComponent implements OnInit {
   courses!: Course[];
   courses$!: Observable<Course[]>;
   httpUrl = 'http://localhost:9000/api/courses';
-  constructor(private http: HttpClient) {}
+
+  constructor(
+    private http: HttpClient,
+    private coursesService: CoursesService
+  ) {}
 
   ngOnInit(): void {
     const params = new HttpParams().set('page', 1).set('pageSize', 10);
-    // witout observable
+
+    console.log(this.coursesService);
+    //* without observable
     // this.http
     //   .get<{ payload: Course[] }>(this.httpUrl, { params })
     //   .subscribe(({ payload }) => {
     //     this.courses = payload;
     //   });
 
-    // with observable
+    //* with observable
 
     this.courses$ = this.http
       .get<{ payload: Course[] }>(this.httpUrl, {
