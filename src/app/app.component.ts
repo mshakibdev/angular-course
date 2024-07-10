@@ -17,28 +17,11 @@ export class AppComponent implements OnInit {
   httpUrl = 'http://localhost:9000/api/courses';
 
   constructor(
-    private http: HttpClient,
     private coursesService: CoursesService
   ) {}
 
   ngOnInit(): void {
-    const params = new HttpParams().set('page', 1).set('pageSize', 10);
-
-    console.log(this.coursesService);
-    //* without observable
-    // this.http
-    //   .get<{ payload: Course[] }>(this.httpUrl, { params })
-    //   .subscribe(({ payload }) => {
-    //     this.courses = payload;
-    //   });
-
-    //* with observable
-
-    this.courses$ = this.http
-      .get<{ payload: Course[] }>(this.httpUrl, {
-        params,
-      })
-      .pipe(map((courses) => courses.payload));
+    this.courses$ = this.coursesService.loadCourses()
   }
 
   @ViewChild(CourseCardComponent) cardComponent!: Component;
@@ -53,3 +36,18 @@ export class AppComponent implements OnInit {
     console.log('called');
   }
 }
+
+//* without observable
+// this.http
+//   .get<{ payload: Course[] }>(this.httpUrl, { params })
+//   .subscribe(({ payload }) => {
+//     this.courses = payload;
+//   });
+
+//* with observable
+
+//  this.courses$ = this.http
+//    .get<{ payload: Course[] }>(this.httpUrl, {
+//      params,
+//    })
+//    .pipe(map((courses) => courses.payload));
