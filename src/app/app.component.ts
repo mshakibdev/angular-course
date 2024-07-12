@@ -16,12 +16,10 @@ export class AppComponent implements OnInit {
   courses$!: Observable<Course[]>;
   httpUrl = 'http://localhost:9000/api/courses';
 
-  constructor(
-    private coursesService: CoursesService
-  ) {}
+  constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {
-    this.courses$ = this.coursesService.loadCourses()
+    this.courses$ = this.coursesService.loadCourses();
   }
 
   @ViewChild(CourseCardComponent) cardComponent!: Component;
@@ -34,6 +32,10 @@ export class AppComponent implements OnInit {
   }
   browserEvent() {
     console.log('called');
+  }
+
+  save(course: Course) {
+    this.coursesService.saveCourse(course).subscribe(() => console.log('course saved'));
   }
 }
 

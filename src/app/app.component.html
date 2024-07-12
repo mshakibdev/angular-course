@@ -15,6 +15,7 @@
       odd as isOdd
     "
     (courseSelceted)="onCardClicked($event)"
+    (courseChanged)="save($event)"
     [course]="course"
     [cardIndex]="i + 1"
     [class.is-first]="isFirst"

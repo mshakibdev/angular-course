@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Course } from '../model/course';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
-  httpUrl = 'http://localhost:9000/api/courses';
+  httpUrl = `http://localhost:9000/api/courses`;
 
   constructor(private http: HttpClient) {
     console.log('only once');
@@ -21,5 +21,9 @@ export class CoursesService {
         params,
       })
       .pipe(map((courses) => courses.payload));
+  }
+  saveCourse(course: Course) {
+    const headers = new HttpHeaders().set('X-Auth', 'userId');
+    return this.http.put(this.httpUrl + `/${course.id}`, course, { headers });
   }
 }
