@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
+import { COURSES_SERVICE } from '../app.component';
 
 @Component({
   selector: 'course-card',
@@ -8,7 +16,9 @@ import { CoursesService } from '../services/courses.service';
   styleUrls: ['./course-card.component.css'],
 })
 export class CourseCardComponent implements OnInit {
-  constructor(private coursesServices: CoursesService) {}
+  constructor(
+    @Inject(COURSES_SERVICE) private coursesServices: CoursesService
+  ) {}
 
   @Input({ required: true }) course!: Course;
 
