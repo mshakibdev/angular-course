@@ -12,6 +12,7 @@ import { CourseCardComponent } from './course-card/course-card.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, toArray, Observable } from 'rxjs';
 import { CoursesService } from './services/courses.service';
+import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
 
 // * factory function which creates the dependecy instance
 //v1- function courseServiceProvider(http: HttpClient): CoursesService {
@@ -26,18 +27,25 @@ import { CoursesService } from './services/courses.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  // providers: [
+  //   {
+      //v2- provide: CONFIG_TOKEN,
+      //v2- useValue: APP_CONFIG,
+      //v1- useFactory: () => APP_CONFIG
+  //   },
+  // ],
   // * telling angular how to create dependency
   // * { provide: UNIQUE_TOKEN, useFactory: factoryFunction() }
   // providers: [
-    //! Not singleton
-    //v3- CoursesService, //^ use class name as an unique identifier + calls new constructor on this class  and all the dependency as well
-    // {
-    //v1- provide: COURSES_SERVICE,
-    //v1- useFactory: courseServiceProvider,
-    //v1- deps: [HttpClient],
-    //v2- provide: CoursesService, //~ use class name as an unique identifier
-    //v2- useClass: CoursesService, //~ angular calls new constructor on this class  and all the dependency as well
-    // },
+  //! Not singleton
+  //v3- CoursesService, //^ use class name as an unique identifier + calls new constructor on this class  and all the dependency as well
+  // {
+  //v1- provide: COURSES_SERVICE,
+  //v1- useFactory: courseServiceProvider,
+  //v1- deps: [HttpClient],
+  //v2- provide: CoursesService, //~ use class name as an unique identifier
+  //v2- useClass: CoursesService, //~ angular calls new constructor on this class  and all the dependency as well
+  // },
   // ],
 })
 export class AppComponent implements OnInit {
@@ -47,8 +55,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     //v1- @Inject(COURSES_SERVICE) private coursesService: CoursesService
-    private coursesService: CoursesService
-  ) {}
+    private coursesService: CoursesService,
+    @Inject(CONFIG_TOKEN) private config: AppConfig
+  ) {
+    console.log('config :>> ', config);
+  }
 
   ngOnInit(): void {
     this.courses$ = this.coursesService.loadCourses();
