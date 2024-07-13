@@ -14,27 +14,31 @@ import { map, toArray, Observable } from 'rxjs';
 import { CoursesService } from './services/courses.service';
 
 // * factory function which creates the dependecy instance
-function courseServiceProvider(http: HttpClient): CoursesService {
-  return new CoursesService(http);
-}
+//v1- function courseServiceProvider(http: HttpClient): CoursesService {
+//   return new CoursesService(http);
+// }
 
 // * injection token a unique identifier for a dependency
-export const COURSES_SERVICE = new InjectionToken<CoursesService>(
-  'COURSES_SERVICE'
-);
+//v1- export const COURSES_SERVICE = new InjectionToken<CoursesService>(
+//   'COURSES_SERVICE'
+// );
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   // * telling angular how to create dependency
   // * { provide: UNIQUE_TOKEN, useFactory: factoryFunction() }
-  providers: [
-    {
-      provide: COURSES_SERVICE,
-      useFactory: courseServiceProvider,
-      deps: [HttpClient],
-    },
-  ],
+  // providers: [
+    //! Not singleton
+    //v3- CoursesService, //^ use class name as an unique identifier + calls new constructor on this class  and all the dependency as well
+    // {
+    //v1- provide: COURSES_SERVICE,
+    //v1- useFactory: courseServiceProvider,
+    //v1- deps: [HttpClient],
+    //v2- provide: CoursesService, //~ use class name as an unique identifier
+    //v2- useClass: CoursesService, //~ angular calls new constructor on this class  and all the dependency as well
+    // },
+  // ],
 })
 export class AppComponent implements OnInit {
   courses!: Course[];
@@ -42,7 +46,8 @@ export class AppComponent implements OnInit {
   httpUrl = 'http://localhost:9000/api/courses';
 
   constructor(
-    @Inject(COURSES_SERVICE) private coursesService: CoursesService
+    //v1- @Inject(COURSES_SERVICE) private coursesService: CoursesService
+    private coursesService: CoursesService
   ) {}
 
   ngOnInit(): void {

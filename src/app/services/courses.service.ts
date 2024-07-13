@@ -3,7 +3,12 @@ import { map, Observable } from 'rxjs';
 import { Course } from '../model/course';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root', //* v3 -Tree-Shakeable Provider
+  //v2- useClass: CoursesService,
+  //v1- useFactory: (http: HttpClient) => new CoursesService(http),
+  //v1- deps: [HttpClient],
+})
 export class CoursesService {
   httpUrl = `http://localhost:9000/api/courses`;
 

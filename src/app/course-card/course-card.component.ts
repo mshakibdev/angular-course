@@ -8,16 +8,18 @@ import {
 } from '@angular/core';
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
-import { COURSES_SERVICE } from '../app.component';
+// import { COURSES_SERVICE } from '../app.component';
 
 @Component({
   selector: 'course-card',
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css'],
+  //providers: [CoursesService],//! Not singleton
 })
 export class CourseCardComponent implements OnInit {
   constructor(
-    @Inject(COURSES_SERVICE) private coursesServices: CoursesService
+    // @Inject(COURSES_SERVICE) private coursesServices: CoursesService
+    private coursesServices: CoursesService
   ) {}
 
   @Input({ required: true }) course!: Course;
@@ -28,7 +30,7 @@ export class CourseCardComponent implements OnInit {
   @Output('courseChanged') courseEmitter = new EventEmitter<Course>();
 
   ngOnInit(): void {
-    console.log(this.coursesServices);
+    // console.log(this.coursesServices);
   }
 
   onCourseViewed() {
